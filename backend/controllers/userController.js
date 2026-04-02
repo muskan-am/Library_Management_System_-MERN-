@@ -47,7 +47,7 @@ export const registerNewAdmin = catchAsyncErrors(async (req, res, next) => {
     }
     const user = await User.create({
         name,
-        email,
+        email, 
         password: hashedPassword,
         role: "Admin",
         accountVerified: true,
@@ -59,6 +59,6 @@ export const registerNewAdmin = catchAsyncErrors(async (req, res, next) => {
     res.status(201).json({
         success: true,
         message: "Admin registered successfully.",
-        admin,
+        user,
     })
 });
