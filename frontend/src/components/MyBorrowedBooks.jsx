@@ -54,7 +54,35 @@ const MyBorrowedBooks = () => {
 
       {/* Sub Header */}
       <header className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
-         <h2 className="text-xl font-medium md:text-2xl md:font-semibold">Borrowed Books</h2>
+         <h2 className="text-xl font-medium md:text-2xl md:font-semibold">
+          Borrowed Books
+          </h2>
+      </header>
+
+      <header className="flex flex-col gap-3 sm:flex-row md:items-center">
+        <button className={`relative rounded sm:rounded-tr-none sm:rounded-br-none sm:rounded-tl-lg
+          sm:rounded-bl-lg text-center border-2 font-semibold py-2 w-full sm:w-72
+          ${
+            filter === "returned" 
+              ? "bg-black text-white border-black"
+              : "bg-gray-200 text-black border-gray-200 hover:bg-gray-300" 
+          }`}
+          onClick={() => setFilter("returned")}
+          >
+            Returned Books
+          </button>
+          
+          <button className={`relative rounded sm:rounded-tl-none sm:rounded-bl-none sm:rounded-tr-lg
+          sm:rounded-br-lg text-center border-2 font-semibold py-2 w-full sm:w-72
+          ${
+            filter === "nonReturned" 
+              ? "bg-black text-white border-black"
+              : "bg-gray-200 text-black border-gray-200 hover:bg-gray-300" 
+          }`}
+          onClick={() => setFilter("nonReturned")}
+          >
+            Non-Returned Books
+          </button>
       </header>
     </main>
   
