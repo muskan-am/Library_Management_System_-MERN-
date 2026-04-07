@@ -13,6 +13,9 @@ import {
   resetBorrowSlice,
 } from "../store/slices/borrowSlice";
 import Header from "../layout/Header";
+import AddBookPopup from "../popups/AddBookPopup";
+import ReadBookPopup from "../popups/ReadBookPopup";
+import RecordBookPopup from "../popups/RecordBookPopup";
 
 
 const BookManagement = () => {
@@ -151,12 +154,46 @@ const BookManagement = () => {
                     )}
                   </tr>
                 </thead>
+                <tbody>
+                  {
+                    searchedBooks.map((book, index)=> (
+                      <tr 
+                      key={book._id} 
+                      className={(index + 1) % 2 === 0 ? "bg-gray-50": ""}
+                      >
+                        <td className="px-4 py-2">{index + 1}</td>
+                        <td className="px-4 py-2">{book.title}</td>
+                        <td className="px-4 py-2">{book.author}</td>
+                        {isAuthenticated && user?.role === "Admin" && (
+                          <td className="px-4 py-2">{book.quantity}</td>
+                    )}
+                         <td className="px-4 py-2">{`$${book.price}`}</td>
+                         <td className="px-4 py-2">
+                          {book.availability ? "Available" : "Unavailable"}
+                         </td>
+                         {isAuthenticated && user?.role === "Admin" && (
+                          <td className="px-4 py-2 flex space-x-2 my-3 justify-center">
+                            <BookA onClick={()=> openReadPopup(book._id)}/>
+                            <NotebookPen 
+                               onClick={() => openRecordBookPopup(book._id)}
+                            />
+                          </td>
+                    )}
+                        
+                      </tr>
+                    ))}
+                </tbody>
               </table>
             </div>
             ) : (
-                ""
+                <h3 className="text-3xl mt-5 font-medium">No books found in library!</h3>
             )}
     </main>
+
+    {addBookPopup && <AddBookPopup/>}  
+    {readBookPopup && <ReadBookPopup book={readBook}/> } 
+    {recordBookPopup && <RecordBookPopup bookId={borrowBookId}/> } 
+    
   </> 
   );   
  
