@@ -10,13 +10,15 @@ import { ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/authSlice";
 import { fetchAllUsers } from "./store/slices/userSlice";
-
+import { fetchAllBooks } from "./store/slices/bookSlice";
+import BookManagement from "./components/BookManagement";
 
 const App = () => {
   const { user, isAuthenticated } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
+    dispatch(fetchAllBooks());
     if (isAuthenticated && user?.role === "Admin") {
       //console.log("THE LOGGED IN USER IS AN ADMIN")
       dispatch(fetchAllUsers());
@@ -31,7 +33,9 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/password/forgot" element={<ForgotPassword />} />
         <Route path="/otp-verification/:email" element={<OTP />} />
-        <Route path="/password/reset/:token" element={<ResetPassword />} />
+        <Route path="/password/reset/:token" element={<ResetPassword/>} />
+        <Route path="/books" element={<BookManagement />}/>
+      
       </Routes>
       <ToastContainer theme="dark" />
     </Router>

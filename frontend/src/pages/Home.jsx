@@ -41,7 +41,7 @@ const Home = () => {
                   <AdminDashboard />
                 )
                 break;
-              case "Book":
+              case "Books":
                 return <BookManagement/>
                 break;
               case "Catalog":

@@ -1,79 +1,102 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const initialState = {
+  loading: false,
+  error: null,
+  message: null,
+  books: [],
+};
+
 const bookSlice = createSlice({
-    name: "book",
-    initialState: {
-        loading: false,
-        error: null,
-        message: null,
-        books: [],
+  name: "book",
+  initialState,
+  reducers: {
+    // 🔹 Fetch Books
+    fetchBooksRequest: (state) => {
+      state.loading = true;
+      state.error = null;
     },
 
-    reducers: {
-        fetchBooksRequest(state) {
-            state.loading = true;
-            state.error = null;
-            state.message = null;
-        },
-
-        fetchBooksSuccess(state, action) {
-            state.loading = false;
-            state.books = action.payload;
-        },
-
-        fetchBooksFailed(state, action) {
-            state.loading = false;
-            state.error = action.payload;
-            state.message = null;
-        },
-        addBookRequest(state) {
-            state.loading = true;
-            state.error = null;
-            state.message = null;
-        },
-        addBookSuccess(state, action) {
-            state.loading = false;
-            state.books = action.payload;
-        },
-        addBookFailed(state, action) {
-            state.loading = false;
-            state.books = action.payload;
-        },
-        resetBookSlice(state) {
-            state.loading = false;
-            state.error = null;
-            state.message = null;
-        },
+    fetchBooksSuccess: (state, action) => {
+      state.loading = false;
+      state.books = action.payload;
     },
+
+    fetchBooksFailed: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // 🔹 Add Book
+    addBookRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.message = null;
+    },
+
+    addBookSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+
+    addBookFailed: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    // 🔹 Reset
+    resetBookSlice: (state) => {
+      state.loading = false;
+      state.error = null;
+      state.message = null;
+    },
+  },
 });
 
+// ================== ACTIONS ==================
+export const {
+  fetchBooksRequest,
+  fetchBooksSuccess,
+  fetchBooksFailed,
+  addBookRequest,
+  addBookSuccess,
+  addBookFailed,
+  resetBookSlice, // ✅ only once export
+} = bookSlice.actions;
+
+// ================== THUNKS ==================
+
+// ✅ Fetch All Books
 export const fetchAllBooks = () => async (dispatch) => {
-  dispatch(bookSlice.actions.fetchBooksRequest());
+  dispatch(fetchBooksRequest());
 
   try {
     const { data } = await axios.get(
       "http://localhost:4000/api/v1/book/all",
-      { withCredentials: true }
+      {
+        withCredentials: true,
+      }
     );
 
-    dispatch(bookSlice.actions.fetchBooksSuccess(data.books));
-  } catch (err) {
+    dispatch(fetchBooksSuccess(data?.books || []));
+  } catch (error) {
     dispatch(
-      bookSlice.actions.fetchBooksFailed(
-        err.response?.data?.message || "Something went wrong"
+      fetchBooksFailed(
+        error?.response?.data?.message || "Failed to fetch books"
       )
     );
   }
 };
 
-export const addBook = (data) => async (dispatch) => {
-  dispatch(bookSlice.actions.addBookRequest());
+// ✅ Add Book
+export const addBook = (formData) => async (dispatch) => {
+  dispatch(addBookRequest());
 
   try {
-    const { data: resData } = await axios.post(
+    const { data } = await axios.post(
       "http://localhost:4000/api/v1/book/admin/add",
-      data,
+      formData,
       {
         withCredentials: true,
         headers: {
@@ -82,17 +105,14 @@ export const addBook = (data) => async (dispatch) => {
       }
     );
 
+    dispatch(addBookSuccess(data?.message || "Book Added"));
+  } catch (error) {
     dispatch(
-      bookSlice.actions.addBookSuccess(resData.message)
-    );
-  } catch (err) {
-    dispatch(
-      bookSlice.actions.addBookFailed(
-        err.response?.data?.message || "Something went wrong"
+      addBookFailed(
+        error?.response?.data?.message || "Failed to add book"
       )
     );
   }
 };
 
-
-export default bookSlice.reducer; 
+export default bookSlice.reducer;
