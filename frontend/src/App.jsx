@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/slices/authSlice";
 import { fetchAllUsers } from "./store/slices/userSlice";
 import { fetchAllBooks } from "./store/slices/bookSlice";
-import BookManagement from "./components/BookManagement";
+
 
 const App = () => {
   const { user, isAuthenticated } = useSelector(state => state.auth);
@@ -34,7 +34,7 @@ const App = () => {
         <Route path="/password/forgot" element={<ForgotPassword />} />
         <Route path="/otp-verification/:email" element={<OTP />} />
         <Route path="/password/reset/:token" element={<ResetPassword/>} />
-        <Route path="/books" element={<BookManagement />}/>
+       
       
       </Routes>
       <ToastContainer theme="dark" />

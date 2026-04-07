@@ -102,12 +102,14 @@ const BookManagement = () => {
   <>
     <main className ="relative flex-1 p-6 pt-28">
         <Header/>
+
+        {/* Sub Header */}
         <header className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
             <h2
                 className="text-xl font-medium md:text-2xl md:font-semibold">
                 {user && user.role === "Admin" ? "Book Management" : "Books"}
             </h2>
-            <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4">
+            <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
                 {isAuthenticated && user?.role === "Admin" && (
                     <button onClick={() => dispatch(toggleAddBookPopup())}
                     className="relative pl-14 w-full sm:w-52 flex gap-4 justify-center items-center py-2 px-4
@@ -129,6 +131,31 @@ const BookManagement = () => {
                 />
             </div>       
         </header>
+
+        {/* table */}
+        {books && books.length > 0 ? (
+            <div className="mt-6 overflow-auto bg-white rounded-md shadow-lg">
+              <table className="min-w-full border-collapse">
+                <thead>
+                  <tr className="bg-gray-200">
+                    <th className="px-4 py-2 text-left">ID</th>
+                    <th className="px-4 py-2 text-left">Name</th>
+                    <th className="px-4 py-2 text-left">Author</th>
+                    {isAuthenticated && user?.role === "Admin" && (
+                       <th className="px-4 py-2 text-left">Quantity</th>
+                    )}
+                    <th className="px-4 py-2 text-left">Price</th>
+                    <th className="px-4 py-2 text-left">Availability</th>
+                    {isAuthenticated && user?.role === "Admin" && (
+                       <th className="px-4 py-2 text-center">Record Book</th>
+                    )}
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            ) : (
+                ""
+            )}
     </main>
   </> 
   );   
