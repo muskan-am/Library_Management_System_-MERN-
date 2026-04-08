@@ -3,6 +3,7 @@ import { BookA } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleReadBookPopup } from "../store/slices/popUpSlice";
 import Header from "../layout/Header";
+import ReadBookPopup from "../popups/ReadBookPopup";
 
 
 const MyBorrowedBooks = () => {
@@ -45,47 +46,94 @@ const MyBorrowedBooks = () => {
     return book.returned === false;
   });
 
-  const booksToDisplay = 
+  const booksToDisplay =
     filter === "returned" ? returnedBooks : nonReturnedBooks;
 
   return <>
     <main className="relative flex-1 p-6 pt-28">
-      <Header/>
+      <Header />
 
       {/* Sub Header */}
       <header className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center">
-         <h2 className="text-xl font-medium md:text-2xl md:font-semibold">
+        <h2 className="text-xl font-medium md:text-2xl md:font-semibold">
           Borrowed Books
-          </h2>
+        </h2>
       </header>
 
       <header className="flex flex-col gap-3 sm:flex-row md:items-center">
         <button className={`relative rounded sm:rounded-tr-none sm:rounded-br-none sm:rounded-tl-lg
           sm:rounded-bl-lg text-center border-2 font-semibold py-2 w-full sm:w-72
-          ${
-            filter === "returned" 
-              ? "bg-black text-white border-black"
-              : "bg-gray-200 text-black border-gray-200 hover:bg-gray-300" 
+          ${filter === "returned"
+            ? "bg-black text-white border-black"
+            : "bg-gray-200 text-black border-gray-200 hover:bg-gray-300"
           }`}
           onClick={() => setFilter("returned")}
-          >
-            Returned Books
-          </button>
-          
-          <button className={`relative rounded sm:rounded-tl-none sm:rounded-bl-none sm:rounded-tr-lg
+        >
+          Returned Books
+        </button>
+
+        <button className={`relative rounded sm:rounded-tl-none sm:rounded-bl-none sm:rounded-tr-lg
           sm:rounded-br-lg text-center border-2 font-semibold py-2 w-full sm:w-72
-          ${
-            filter === "nonReturned" 
-              ? "bg-black text-white border-black"
-              : "bg-gray-200 text-black border-gray-200 hover:bg-gray-300" 
+          ${filter === "nonReturned"
+            ? "bg-black text-white border-black"
+            : "bg-gray-200 text-black border-gray-200 hover:bg-gray-300"
           }`}
           onClick={() => setFilter("nonReturned")}
-          >
-            Non-Returned Books
-          </button>
+        >
+          Non-Returned Books
+        </button>
       </header>
+
+      {
+        booksToDisplay && booksToDisplay.length > 0 ? (
+          <div className="mt-6 overflow-auto bg-white rounded-md shadow-lg">
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="px-4 py-2 text-left">ID</th>
+                  <th className="px-4 py-2 text-left">Book Title</th>
+                  <th className="px-4 py-2 text-left">Date & Time</th>
+                  <th className="px-4 py-2 text-left">Due Date</th>
+                  <th className="px-4 py-2 text-left">Returned</th>
+                  <th className="px-4 py-2 text-left">View</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {
+                  booksToDisplay.map((book) => (
+                    <tr key={index}
+                      className={(index + 1) % 2 === 0 ? "bg-gray-50" : ""}
+                    >
+                      <td className="px-4 py-2">{index + 1}</td>
+                      <td className="px-4 py-2">{book.bookTitle}</td>
+                      <td className="px-4 py-2">{formatDate(book.borrowDate)}</td>
+                      <td className="px-4 py-2">{formatDate(book.dueDate)}</td>
+                      <td className="px-4 py-2">
+                        {book.returned ? "Yes" : "No"}
+                      </td>
+                      <td className="px-4 py-2">
+                        <BookA onClick={() => openReadPopup(book.bookId)} />
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        ) : filter === "returned" ? (
+          <h3 className="text-3xl mt-5 font-medium">
+            No returned books found !
+          </h3>
+        ) : (
+          <h3 className="text-3xl mt-5 font-medium">
+            No non-returned books found !
+          </h3>
+        )
+      }
     </main>
-  
+    {readBookPopup && <ReadBookPopup book={readBook}/>}
+
   </>;
 };
 
