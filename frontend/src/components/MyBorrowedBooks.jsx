@@ -100,24 +100,23 @@ const MyBorrowedBooks = () => {
               </thead>
 
               <tbody>
-                {
-                  booksToDisplay.map((book) => (
-                    <tr key={index}
-                      className={(index + 1) % 2 === 0 ? "bg-gray-50" : ""}
-                    >
-                      <td className="px-4 py-2">{index + 1}</td>
-                      <td className="px-4 py-2">{book.bookTitle}</td>
-                      <td className="px-4 py-2">{formatDate(book.borrowDate)}</td>
-                      <td className="px-4 py-2">{formatDate(book.dueDate)}</td>
-                      <td className="px-4 py-2">
-                        {book.returned ? "Yes" : "No"}
-                      </td>
-                      <td className="px-4 py-2">
-                        <BookA onClick={() => openReadPopup(book.bookId)} />
-                      </td>
-                    </tr>
-                  ))
-                }
+                {booksToDisplay.map((book, index) => (
+                  <tr
+                    key={book._id || index}
+                    className={(index + 1) % 2 === 0 ? "bg-gray-50" : ""}
+                  >
+                    <td className="px-4 py-2">{index + 1}</td>
+                    <td className="px-4 py-2">{book.bookTitle}</td>
+                    <td className="px-4 py-2">{formatDate(book.borrowDate)}</td>
+                    <td className="px-4 py-2">{formatDate(book.dueDate)}</td>
+                    <td className="px-4 py-2">
+                      {book.returned ? "Yes" : "No"}
+                    </td>
+                    <td className="px-4 py-2">
+                      <BookA onClick={() => openReadPopup(book.bookId)} />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -132,7 +131,7 @@ const MyBorrowedBooks = () => {
         )
       }
     </main>
-    {readBookPopup && <ReadBookPopup book={readBook}/>}
+    {readBookPopup && <ReadBookPopup book={readBook} />}
 
   </>;
 };
