@@ -61,7 +61,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
 
         <nav className="flex-1 px-6 space-y-2">
           <button
-            className="w-full py-2 flex items-center space-x-2"
+            className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
             onClick={() => setSelectedComponent("Dashboard")}
           >
             <img src={dashboardIcon} alt="icon" />
@@ -69,7 +69,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
           </button>
 
           <button
-            className="w-full py-2 flex items-center space-x-2"
+            className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
             onClick={() => setSelectedComponent("Books")}
           >
             <img src={bookIcon} alt="icon" />
@@ -79,7 +79,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
           {isAuthenticated && user?.role === "Admin" && (
             <>
               <button
-                className="w-full py-2 flex items-center space-x-2"
+                className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
                 onClick={() => setSelectedComponent("Catalog")}
               >
                 <img src={catalogIcon} alt="icon" />
@@ -87,7 +87,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
               </button>
 
               <button
-                className="w-full py-2 flex items-center space-x-2"
+                className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
                 onClick={() => setSelectedComponent("Users")}
               >
                 <img src={usersIcon} alt="icon" />
@@ -95,7 +95,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
               </button>
               
               <button
-                className="w-full py-2 flex items-center space-x-2"
+                className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
                 onClick={() => dispatch(toggleAddNewAdminPopup())}
               >
                 <RiAdminFill className="w-6 h-6" />
@@ -106,7 +106,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
 
           {isAuthenticated && user?.role === "User" && (
             <button
-              className="w-full py-2 flex items-center space-x-2"
+              className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
               onClick={() => setSelectedComponent("My Borrowed Books")}
             >
               <img src={catalogIcon} alt="icon" />
@@ -115,7 +115,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
           )}
 
           <button
-            className="w-full py-2 flex items-center space-x-2"
+            className="md:hidden w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
             onClick={() => dispatch(toggleSettingPopup())}
           >
             <img src={settingIcon} alt="icon" />
@@ -125,7 +125,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
 
         <div className="px-6 py-4">
           <button
-            className="flex items-center justify-center space-x-3"
+            className="py-2 font-medium text-center bg-transparent rounded-md hover:cursor-pointer flex items-center justify-center space-x-3"
             onClick={handleLogout}
           >
             <img src={logoutIcon} alt="icon" />

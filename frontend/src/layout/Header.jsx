@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleSettingPopup } from "../store/slices/popUpSlice";
 
 const Header = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
 
@@ -24,7 +24,7 @@ const Header = () => {
 
       const options = {
         month: "short",
-        day: "numeric", 
+        day: "numeric",
         year: "numeric",
       };
 
@@ -56,20 +56,20 @@ const Header = () => {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="hidden md:flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <div className="flex flex-col text-sm lg:text-base items-end font-semibold">
             <span>{currentTime}</span>
             <span>{currentDate}</span>
           </div>
 
-          <span className="bg-black h-14 w-[2px] flex items-center justify-center">
-            <img
-              src={settingIcon}
-              alt="settingIcon"
-              className="w-6 h-6 cursor-pointer"
-              onClick={() => dispatch(toggleSettingPopup())}
-            />
-          </span>
+          <span className="bg-black h-10 w-[2px]"></span>
+
+          <img
+            src={settingIcon}
+            alt="settingIcon"
+            className="w-6 h-6 cursor-pointer"
+            onClick={() => dispatch(toggleSettingPopup())}
+          />
         </div>
       </header>
     </>
