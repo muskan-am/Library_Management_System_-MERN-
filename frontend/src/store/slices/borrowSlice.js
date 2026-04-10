@@ -13,10 +13,10 @@ const borrowSlice = createSlice({
   },
 
   reducers: {
+    // USER BORROWED BOOKS
     fetchUserBorrowedBooksRequest(state) {
       state.loading = true;
       state.error = null;
-      state.message = null;
     },
     fetchUserBorrowedBooksSuccess(state, action) {
       state.loading = false;
@@ -27,6 +27,7 @@ const borrowSlice = createSlice({
       state.error = action.payload;
     },
 
+    // RECORD BOOK
     recordBookRequest(state) {
       state.loading = true;
       state.error = null;
@@ -41,10 +42,10 @@ const borrowSlice = createSlice({
       state.error = action.payload;
     },
 
+    // ALL BORROWED BOOKS (ADMIN)
     fetchAllBorrowedBooksRequest(state) {
       state.loading = true;
       state.error = null;
-      state.message = null;
     },
     fetchAllBorrowedBooksSuccess(state, action) {
       state.loading = false;
@@ -55,10 +56,10 @@ const borrowSlice = createSlice({
       state.error = action.payload;
     },
 
+    // RETURN BOOK
     returnBookRequest(state) {
       state.loading = true;
       state.error = null;
-      state.message = null;
     },
     returnBookSuccess(state, action) {
       state.loading = false;
@@ -69,6 +70,7 @@ const borrowSlice = createSlice({
       state.error = action.payload;
     },
 
+    // RESET
     resetBorrowSlice(state) {
       state.loading = false;
       state.error = null;
@@ -78,7 +80,7 @@ const borrowSlice = createSlice({
 });
 
 
-// ✅ Async Actions (CLEAN VERSION)
+// ================== ASYNC ACTIONS ==================
 
 // 👉 Get user borrowed books
 export const fetchUserBorrowedBooks = () => async (dispatch) => {
@@ -130,7 +132,7 @@ export const fetchAllBorrowedBooks = () => async (dispatch) => {
 };
 
 
-// 👉 Borrow book
+// 👉 Record Borrow Book (FIXED + AUTO REFRESH)
 export const recordBorrowBook = (email, id) => async (dispatch) => {
   dispatch(borrowSlice.actions.recordBookRequest());
 
@@ -147,19 +149,24 @@ export const recordBorrowBook = (email, id) => async (dispatch) => {
     );
 
     dispatch(borrowSlice.actions.recordBookSuccess(data.message));
+
+    // 🔥 AUTO REFRESH AFTER SUCCESS
+    dispatch(fetchAllBorrowedBooks());
+
+    // 🔥 CLOSE POPUP
     dispatch(toggleRecordBookPopup());
 
   } catch (err) {
     dispatch(
       borrowSlice.actions.recordBookFailed(
-        err?.response?.data?.message || "Something went wrong"
+        err.response?.data?.message || "Something went wrong"
       )
     );
   }
 };
 
 
-// 👉 Return book
+// 👉 Return Book (ALSO AUTO REFRESH)
 export const returnBook = (email, id) => async (dispatch) => {
   dispatch(borrowSlice.actions.returnBookRequest());
 
@@ -176,6 +183,10 @@ export const returnBook = (email, id) => async (dispatch) => {
     dispatch(
       borrowSlice.actions.returnBookSuccess(data.message)
     );
+
+    // 🔥 AUTO REFRESH
+    dispatch(fetchAllBorrowedBooks());
+
   } catch (err) {
     dispatch(
       borrowSlice.actions.returnBookFailed(

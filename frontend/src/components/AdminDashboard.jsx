@@ -165,7 +165,7 @@ const AdminDashboard = () => {
           <div className="hidden xl:flex bg-white p-7 text-lg sm:text-xl xl:text-3xl 2xl:text-4xl min-h-52
           font-semibold relative flex-[3] justify-center items-center rounded-2xl">
             <h4 className="overflow-y-hidden">
-               "Embarking on the journey of reading fosters personal growth, nurturing a path towards excellence and the refinedment of character."
+                "Today a reader, tomorrow a leader."
             </h4>
             <p className="text-gray-700 text-sm sm:text-lg absolute right-[35px] sm:right-[78px] bottom-[10px]">
                 ~ BookWorm Team
