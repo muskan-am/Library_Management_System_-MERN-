@@ -24,6 +24,7 @@ const MyBorrowedBooks = () => {
   };
 
   const formatDate = (timeStamp) => {
+    if(!timeStamp) return "N/A";
     const date = new Date(timeStamp);
     const formattedDate = `${String(date.getDate()).padStart(2, "0")}-${String(
       date.getMonth() + 1
@@ -92,7 +93,7 @@ const MyBorrowedBooks = () => {
                 <tr className="bg-gray-200">
                   <th className="px-4 py-2 text-left">ID</th>
                   <th className="px-4 py-2 text-left">Book Title</th>
-                  <th className="px-4 py-2 text-left">Date & Time</th>
+                  <th className="px-4 py-2 text-left">Borrowed Date</th>
                   <th className="px-4 py-2 text-left">Due Date</th>
                   <th className="px-4 py-2 text-left">Returned</th>
                   <th className="px-4 py-2 text-left">View</th>
@@ -107,7 +108,8 @@ const MyBorrowedBooks = () => {
                   >
                     <td className="px-4 py-2">{index + 1}</td>
                     <td className="px-4 py-2">{book.bookTitle}</td>
-                    <td className="px-4 py-2">{formatDate(book.borrowDate)}</td>
+                    <td className="px-4 py-2">{formatDate(book.borrowedDate
+                    )}</td>
                     <td className="px-4 py-2">{formatDate(book.dueDate)}</td>
                     <td className="px-4 py-2">
                       {book.returned ? "Yes" : "No"}

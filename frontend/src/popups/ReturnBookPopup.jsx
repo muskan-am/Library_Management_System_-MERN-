@@ -9,7 +9,7 @@ const ReturnBookPopup = ({bookId, email}) => {
 
   const handleReturnBook = (e) => {
     e.preventDefault();
-    dispatch(returnBook({ bookId, email }));
+    dispatch(returnBook({ email, bookId }));
     dispatch(toggleReturnBookPopup());
   };
 
@@ -39,7 +39,7 @@ const ReturnBookPopup = ({bookId, email}) => {
                           className='px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300'
                           type='button'
                           onClick={()=>{
-                            dispatch(toggleRecordBookPopup());
+                            dispatch(toggleReturnBookPopup());
                           }}
                         >
                            Close

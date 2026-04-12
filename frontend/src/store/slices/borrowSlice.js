@@ -167,12 +167,12 @@ export const recordBorrowBook = (email, id) => async (dispatch) => {
 
 
 // 👉 Return Book (ALSO AUTO REFRESH)
-export const returnBook = (email, id) => async (dispatch) => {
+export const returnBook = ({ email, bookId }) => async (dispatch) => {
   dispatch(borrowSlice.actions.returnBookRequest());
 
   try {
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/borrow/return-borrowed-book/${id}`,
+      `http://localhost:4000/api/v1/borrow/return-borrowed-book/${bookId}`,
       { email },
       {
         withCredentials: true,

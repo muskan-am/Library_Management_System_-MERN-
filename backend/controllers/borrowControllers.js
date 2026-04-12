@@ -44,6 +44,7 @@ export const recordBorrowedBook = catchAsyncErrors(async (req, res, next) => {
             email: user.email,
         },
         book: book._id,
+        borrowedDate: new Date(),
         dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         price: book.price,
     });
@@ -86,7 +87,7 @@ export const returnBorrowBook = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("You have not borrowed this book.", 400));
     }
     borrow.returnDate = new Date();
-    const fine = calculateFine(borrow.duedate);
+    const fine = calculateFine(borrow.dueDate);
     borrow.fine = fine;
     await borrow.save();
     res.status(200).json({
