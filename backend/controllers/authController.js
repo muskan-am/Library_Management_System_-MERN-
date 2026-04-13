@@ -8,7 +8,6 @@ import { sendToken } from "../utils/sendToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import { generateForgotPasswordEmailTemplate } from "../utils/emailTemplates.js";
 
-
 export const register = catchAsyncErrors(async(req, res, next) => {
     try{
        const { name, email, password } = req.body;
