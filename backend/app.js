@@ -16,12 +16,22 @@ export const app = express();
 
 config({path: "./config/config.env"});
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.NETLIFY_URL,
+    "http://localhost:5173",
+].filter(Boolean);
+
 app.use(
     cors({
-    origin: [process.env.FRONTEND_URL],
-    methods: ["GET","POST", "PUT","DELETE"],
-    credentials: true,
-})
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.includes(origin)) return callback(null, true);
+            return callback(new Error("Not allowed by CORS"), false);
+        },
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+        credentials: true,
+    })
 );
 
 app.use(cookieParser());
