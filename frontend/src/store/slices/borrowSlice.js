@@ -88,7 +88,7 @@ export const fetchUserBorrowedBooks = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/borrow/my-borrowed-books",
+      "https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/my-borrowed-books",
       { withCredentials: true }
     );
 
@@ -113,7 +113,7 @@ export const fetchAllBorrowedBooks = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/borrow/borrowed-books-by-users",
+      "https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/borrowed-books-by-users",
       { withCredentials: true }
     );
 
@@ -138,7 +138,7 @@ export const recordBorrowBook = (email, id) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/borrow/record-borrow-book/${id}`,
+      `https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/record-borrow-book/${id}`,
       { email },
       {
         withCredentials: true,
@@ -172,7 +172,7 @@ export const returnBook = ({ email, bookId }) => async (dispatch) => {
 
   try {
     const { data } = await axios.put(
-      `http://localhost:4000/api/v1/borrow/return-borrowed-book/${bookId}`,
+      `https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/return-borrowed-book/${bookId}`,
       { email },
       {
         withCredentials: true,

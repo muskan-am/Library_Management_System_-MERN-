@@ -74,7 +74,7 @@ export const fetchAllBooks = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/book/all",
+      "https://library-management-system-mern-9s8j.onrender.com/api/v1/book/all",
       {
         withCredentials: true,
       }
@@ -96,7 +96,7 @@ export const addBook = (formData) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/book/admin/add",
+      "https://library-management-system-mern-9s8j.onrender.com/api/v1/book/admin/add",
       formData,
       {
         withCredentials: true,
