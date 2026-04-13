@@ -19,12 +19,14 @@ config({path: "./config/config.env"});
 const allowedOrigins = [
     process.env.FRONTEND_URL,
     process.env.NETLIFY_URL,
+    "https://digitalibrary11.netlify.app",
     "http://localhost:5173",
 ].filter(Boolean);
 
 app.use(
     cors({
         origin: function (origin, callback) {
+            // Allow requests with no origin, like server-to-server or Postman
             if (!origin) return callback(null, true);
             if (allowedOrigins.includes(origin)) return callback(null, true);
             return callback(new Error("Not allowed by CORS"), false);
@@ -33,6 +35,11 @@ app.use(
         credentials: true,
     })
 );
+
+app.options("*", cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
 
 app.use(cookieParser());
 app.use(express.json());
