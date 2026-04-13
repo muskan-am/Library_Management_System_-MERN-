@@ -33,13 +33,9 @@ app.use(
         },
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         credentials: true,
+        optionsSuccessStatus: 200,
     })
 );
-
-app.options("*", cors({
-    origin: allowedOrigins,
-    credentials: true,
-}));
 
 app.use(cookieParser());
 app.use(express.json());
