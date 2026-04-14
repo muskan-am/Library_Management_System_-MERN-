@@ -208,6 +208,39 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 
+export const updatePassword = catchAsyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user._id).select("+password");
+
+    const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+        return next(new ErrorHandler("Please enter all fields.", 400));
+    }
+
+    const isPasswordMatched = await bcrypt.compare(
+        currentPassword,
+        user.password
+    );
+
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Current password is incorrect.", 400));
+    }
+
+    if (newPassword !== confirmNewPassword) {
+        return next(new ErrorHandler("Passwords do not match.", 400));
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+
+    await user.save();
+
+    res.status(200).json({
+        success: true,
+        message: "Password updated successfully.",
+    });
+});
+
+
 // ✅ RESET PASSWORD
 export const resetPassword = catchAsyncErrors(async (req, res, next) => {
     const resetPasswordToken = crypto
