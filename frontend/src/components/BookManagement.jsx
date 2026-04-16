@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BookA, NotebookPen } from "lucide-react";
+import { BookA, NotebookPen, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   toggleAddBookPopup,
@@ -7,7 +7,11 @@ import {
   toggleRecordBookPopup,
 } from "../store/slices/popUpSlice";
 import { toast } from "react-toastify";
-import { fetchAllBooks, resetBookSlice } from "../store/slices/bookSlice";
+import {
+  deleteBookById,
+  fetchAllBooks,
+  resetBookSlice,
+} from "../store/slices/bookSlice";
 import {
   fetchAllBorrowedBooks,
   resetBorrowSlice,
@@ -40,6 +44,7 @@ const BookManagement = () => {
   const [readBook, setReadBook] = useState({});
   const [borrowBookId, setBorrowBookId] = useState("");
   const [searchedKeyword, setSearchedKeyword] = useState("");
+  const [deletingBookId, setDeletingBookId] = useState("");
 
   // ✅ Fetch books on load
   useEffect(() => {
@@ -91,15 +96,22 @@ const BookManagement = () => {
     setSearchedKeyword(e.target.value.toLowerCase());
   };
 
+  const handleDeleteBook = async (bookId, bookTitle) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete \"${bookTitle}\"?`
+    );
+    if (!confirmed) return;
+
+    setDeletingBookId(bookId);
+    await dispatch(deleteBookById(bookId));
+    setDeletingBookId("");
+  };
+
   // ✅ Safe filtering
   const searchedBooks =
     books?.filter((book) => 
       book?.title?.toLowerCase().includes(searchedKeyword)
     ) || [];
-
-  // ✅ Debug (remove later)
-  console.log("BOOKS:", books);
-  console.log("SEARCHED:", searchedBooks);
 
   return (
   <>
@@ -173,10 +185,23 @@ const BookManagement = () => {
                          </td>
                          {isAuthenticated && user?.role === "Admin" && (
                           <td className="px-4 py-2 flex space-x-2 my-3 justify-center">
-                            <BookA onClick={()=> openReadPopup(book._id)}/>
+                            <BookA
+                              className="cursor-pointer text-gray-700 hover:text-black"
+                              onClick={()=> openReadPopup(book._id)}
+                            />
                             <NotebookPen 
+                               className="cursor-pointer text-gray-700 hover:text-black"
                                onClick={() => openRecordBookPopup(book._id)}
                             />
+                            <button
+                              type="button"
+                              aria-label={`Delete ${book.title}`}
+                              disabled={deletingBookId === book._id}
+                              onClick={() => handleDeleteBook(book._id, book.title)}
+                              className="text-red-600 hover:text-red-700 disabled:text-red-300"
+                            >
+                              <Trash2 className="w-6 h-6" />
+                            </button>
                           </td>
                     )}
                         

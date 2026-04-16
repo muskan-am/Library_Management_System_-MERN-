@@ -46,6 +46,23 @@ const bookSlice = createSlice({
       state.error = action.payload;
     },
 
+    // 🔹 Delete Book
+    deleteBookRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.message = null;
+    },
+
+    deleteBookSuccess: (state, action) => {
+      state.loading = false;
+      state.message = action.payload;
+    },
+
+    deleteBookFailed: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
     // 🔹 Reset
     resetBookSlice: (state) => {
       state.loading = false;
@@ -63,6 +80,9 @@ export const {
   addBookRequest,
   addBookSuccess,
   addBookFailed,
+  deleteBookRequest,
+  deleteBookSuccess,
+  deleteBookFailed,
   resetBookSlice, // ✅ only once export
 } = bookSlice.actions;
 
@@ -112,6 +132,28 @@ export const addBook = (formData) => async (dispatch) => {
     dispatch(
       addBookFailed(
         error?.response?.data?.message || "Failed to add book"
+      )
+    );
+  }
+};
+
+// ✅ Delete Book
+export const deleteBookById = (bookId) => async (dispatch) => {
+  dispatch(deleteBookRequest());
+
+  try {
+    const { data } = await axios.delete(
+      `https://library-management-system-mern-9s8j.onrender.com/api/v1/book/delete/${bookId}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch(deleteBookSuccess(data?.message || "Book deleted successfully"));
+  } catch (error) {
+    dispatch(
+      deleteBookFailed(
+        error?.response?.data?.message || "Failed to delete book"
       )
     );
   }
