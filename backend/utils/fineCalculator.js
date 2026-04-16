@@ -6,5 +6,8 @@ export const calculateFine = (dueDate) => {
        const fine = lateHours * finePerHour;
        return fine;
     }
+
+
+    
     return 0;
 };
