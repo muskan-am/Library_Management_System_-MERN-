@@ -93,6 +93,41 @@ This system helps manage books, users, and transactions efficiently with feature
  
   ---
 
+  ## 📂 Project Structure
+  Library-Management-System/
+│
+├── backend/
+├── frontend/
+└── README.md
+
+
+---
+
+## ⚙️ Installation & Setup
+
+### Clone Repo
+```bash
+git clone https://github.com/your-username/library-management-system.git
+cd library-management-system
+
+###  Backend Setup
+cd backend
+npm install
+npm run dev
+
+### Frontend Setup
+cd frontend
+npm install
+npm start
+---
+## 📌 API Endpoints
+| Method | Endpoint       | Description   |
+| ------ | -------------- | ------------- |
+| GET    | /api/books     | Get all books |
+| POST   | /api/books     | Add book      |
+| PUT    | /api/books/:id | Update book   |
+| DELETE | /api/books/:id | Delete book   |
+
   ## 👩‍💻 Author
 
  -   Muskan Kesharwani
