@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import logo from "../assets/black-logo.png";
 import logo_with_title from "../assets/logo-with-title.png";
@@ -34,7 +34,7 @@ const ResetPassword = () => {
       toast.error(error);
       dispatch(resetAuthSlice());
     }
-  }, [dispatch, error, loading, isAuthenticated]);
+  }, [dispatch, error, message]);
 
   if (isAuthenticated) {
     return <Navigate to={"/"} />;
@@ -55,7 +55,7 @@ const ResetPassword = () => {
               />
             </div>
             <h3 className="text-gray-300 mb-12 max-w-[320px] mx-auto text-3xl font-medium leading-10">
-              "Your premier digital library for borrowing and reading books"
+              &quot;Your premier digital library for borrowing and reading books&quot;
             </h3>
           </div>
         </div>

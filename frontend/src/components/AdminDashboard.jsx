@@ -1,4 +1,3 @@
-import React from "react";
 import adminIcon from "../assets/pointing.png";
 import usersIcon from "../assets/people-black.png";
 import bookIcon from "../assets/book-square.png";
@@ -38,11 +37,9 @@ const AdminDashboard = () => {
   const { users } = useSelector((state) => state.user);
   const { books } = useSelector((state) => state.book);
   const { allBorrowedBooks } = useSelector((state) => state.borrow);
-  const { settingPopup } = useSelector((state) => state.popup);
-
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalAdmins, setTotalAdmins] = useState(0);
-  const [totalBooks, setTotalBooks] = useState((books && books.length) || 0);
+  const totalBooks = (books && books.length) || 0;
   const [totalBorrowedBooks, setTotalBorrowedBooks] = useState(0);
   const [totalReturnedBooks, setTotalReturnedBooks] = useState(0);
 
@@ -165,7 +162,7 @@ const AdminDashboard = () => {
           <div className="hidden xl:flex bg-white p-7 text-lg sm:text-xl xl:text-3xl 2xl:text-4xl min-h-52
           font-semibold relative flex-[3] justify-center items-center rounded-2xl">
             <h4 className="overflow-y-hidden">
-                "Today a reader, tomorrow a leader."
+              &quot;Today a reader, tomorrow a leader.&quot;
             </h4>
             <p className="text-gray-700 text-sm sm:text-lg absolute right-[35px] sm:right-[78px] bottom-[10px]">
                 ~ BookWorm Team

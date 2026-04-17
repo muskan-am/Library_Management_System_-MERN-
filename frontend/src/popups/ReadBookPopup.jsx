@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
 import { toggleReadBookPopup } from '../store/slices/popUpSlice';
 
@@ -61,3 +61,11 @@ const ReadBookPopup = ({book}) => {
 }
 
 export default ReadBookPopup
+
+ReadBookPopup.propTypes = {
+  book: PropTypes.shape({
+    title: PropTypes.string,
+    author: PropTypes.string,
+    description: PropTypes.string,
+  }).isRequired,
+};

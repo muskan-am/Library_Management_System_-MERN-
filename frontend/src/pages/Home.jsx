@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
@@ -33,41 +33,30 @@ const Home = () => {
         setSelectedComponent={setSelectedComponent}
       />
 
-      {
-        (() => {
-            switch (selectedComponent) {
-              case "Dashboard":
-                return user?.role === "User" ? (
-                  <UserDashboard />
-                ) : (
-                  <AdminDashboard />
-                )
-                break;
-              case "Books":
-                return <BookManagement/>
-                break;
-              case "Catalog":
-                if(user.role === "Admin"){
-                  return <Catalog/>
-                }
-                break;
-              case "Users":
-                if(user.role === "Admin"){
-                  return <Users/>
-                }
-                break;
-              case "My Borrowed Books":
-                  return <MyBorrowedBooks/>
-                break;
-              default:
-                return user?.role === "User" ? (
-                  <UserDashboard />
-                ) : (
-                  <AdminDashboard />
-                )
-                break;
-            }
-          })()}
+      {(() => {
+        switch (selectedComponent) {
+          case "Dashboard":
+            return user?.role === "User" ? (
+              <UserDashboard />
+            ) : (
+              <AdminDashboard />
+            );
+          case "Books":
+            return <BookManagement />;
+          case "Catalog":
+            return user?.role === "Admin" ? <Catalog /> : null;
+          case "Users":
+            return user?.role === "Admin" ? <Users /> : null;
+          case "My Borrowed Books":
+            return <MyBorrowedBooks />;
+          default:
+            return user?.role === "User" ? (
+              <UserDashboard />
+            ) : (
+              <AdminDashboard />
+            );
+        }
+      })()}
     </div>
   </>;
 };

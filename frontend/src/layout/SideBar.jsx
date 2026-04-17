@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import logo_with_title from "../assets/logo-with-title.png";
 import logoutIcon from "../assets/logout.png";
 import closeIcon from "../assets/white-close-icon.png";
@@ -19,6 +19,7 @@ import {
 
 import AddNewAdmin from "../popups/AddNewAdmin";
 import SettingPopup from "../popups/SettingPopup";
+import PropTypes from "prop-types";
 
 const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
     (state) => state.popup
   );
 
-  const { loading, error, message, user, isAuthenticated } = useSelector(
+  const { error, message, user, isAuthenticated } = useSelector(
     (state) => state.auth
   );
 
@@ -44,7 +45,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
       toast.success(message);
       dispatch(resetAuthSlice());
     }
-  }, [dispatch, isAuthenticated, error, loading, message]);
+  }, [dispatch, error, message]);
 
   return (
     <>
@@ -148,3 +149,9 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
 };
 
 export default SideBar;
+
+SideBar.propTypes = {
+  isSideBarOpen: PropTypes.bool.isRequired,
+  setIsSideBarOpen: PropTypes.func.isRequired,
+  setSelectedComponent: PropTypes.func.isRequired,
+};

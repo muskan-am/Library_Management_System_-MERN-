@@ -131,8 +131,8 @@ const authSlice = createSlice({
             state.error = null;
             state.loading = false;
             state.message = null;
-            state.user = state.user;
-            state.isAuthenticated = state.isAuthenticated;
+            state.user = state.user ?? null;
+            state.isAuthenticated = state.isAuthenticated ?? false;
         },
     },
 });

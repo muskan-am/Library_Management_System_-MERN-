@@ -1,6 +1,6 @@
-import React from 'react'
+import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
-import { toggleRecordBookPopup, toggleReturnBookPopup } from '../store/slices/popUpSlice';
+import { toggleReturnBookPopup } from '../store/slices/popUpSlice';
 import { returnBook } from '../store/slices/borrowSlice';
 
 
@@ -60,3 +60,8 @@ const ReturnBookPopup = ({bookId, email}) => {
 }
 
 export default ReturnBookPopup
+
+ReturnBookPopup.propTypes = {
+  bookId: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+};

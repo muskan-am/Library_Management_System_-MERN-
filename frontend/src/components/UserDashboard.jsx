@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo_with_title from "../assets/logo-with-title-black.png";
 import returnIcon from "../assets/redo.png";
 import browseIcon from "../assets/pointing.png";
@@ -34,7 +34,6 @@ ChartJS.register(
 );
 
 const UserDashboard = () => {
-  const { settingPopup } = useSelector((state) => state.popup);
   const { userBorrowedBooks } = useSelector((state) => state.borrow);
 
   const [totalBorrowedBooks, setTotalBorrowedBooks] = useState(0);
@@ -93,7 +92,7 @@ const UserDashboard = () => {
                         <img src={browseIcon} alt="book-icon"  className="w-8 h-8"/>
                         </span>
                       <p className="text-lg xl:text-xl font-semibold">
-                        Let's browse books inventory
+                        Let&apos;s browse books inventory
                       </p>
                     </div>
                     <img src={logo_with_title} alt="logo" className="hidden lg:block w-auto justify-end" />
@@ -103,7 +102,7 @@ const UserDashboard = () => {
             <div className="bg-white p-7 text-lg sm:text-xl xl:text-3xl 2xl:text-4xl min-h-52 font-semibold
             relative flex-[3] flex justify-center items-center rounded-2xl">
                <h4 className="overflow-y-hidden">
-                “Today a reader, tomorrow a leader.”
+                &ldquo;Today a reader, tomorrow a leader.&rdquo;
                </h4>
                <p className="text-gray-700 text-sm sm:text-lg absolute right-[35px] sm:right-[78px] bottom-[10px]">
                 ~ BookWorm Team

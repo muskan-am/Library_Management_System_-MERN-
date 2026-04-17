@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { BookA, NotebookPen, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,7 +25,7 @@ import RecordBookPopup from "../popups/RecordBookPopup";
 const BookManagement = () => {
   const dispatch = useDispatch();
 
-  const { loading, error, message, books } = useSelector(
+  const { error, message, books } = useSelector(
     (state) => state.book
   );
 
@@ -36,7 +36,6 @@ const BookManagement = () => {
   );
 
   const {
-    loading: borrowSliceLoading,
     error: borrowSliceError,
     message: borrowSliceMessage,
   } = useSelector((state) => state.borrow);
@@ -98,7 +97,7 @@ const BookManagement = () => {
 
   const handleDeleteBook = async (bookId, bookTitle) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete \"${bookTitle}\"?`
+      `Are you sure you want to delete "${bookTitle}"?`
     );
     if (!confirmed) return;
 

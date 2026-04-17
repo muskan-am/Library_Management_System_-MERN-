@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { toggleRecordBookPopup } from "../store/slices/popUpSlice";
 import { recordBorrowBook } from "../store/slices/borrowSlice";
@@ -69,3 +70,7 @@ const RecordBookPopup = ({ bookId }) => {
 };
 
 export default RecordBookPopup;
+
+RecordBookPopup.propTypes = {
+  bookId: PropTypes.string.isRequired,
+};

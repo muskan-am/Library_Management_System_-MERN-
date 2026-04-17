@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/black-logo.png";
 import logo_with_title from "../assets/logo-with-title.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { loading, error, message, user, isAuthenticated } = useSelector(
+  const { error, message, isAuthenticated } = useSelector(
     (state) => state.auth
   );
 

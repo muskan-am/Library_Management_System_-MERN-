@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import {addBook, fetchAllBooks} from "../store/slices/bookSlice";
-import { toggleAddBookPopup, toggleRecordBookPopup } from "../store/slices/popUpSlice";
+import { toggleAddBookPopup } from "../store/slices/popUpSlice";
 
 
 const AddBookPopup = () => {

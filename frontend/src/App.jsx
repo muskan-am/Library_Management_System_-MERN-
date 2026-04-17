@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -20,14 +20,20 @@ const App = () => {
   useEffect(() => {
     dispatch(getUser());
     dispatch(fetchAllBooks());
-    if (isAuthenticated && user?.role === "User") {
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    if (user?.role === "User") {
       dispatch(fetchUserBorrowedBooks());
     }
-    if (isAuthenticated && user?.role === "Admin") {
+
+    if (user?.role === "Admin") {
       dispatch(fetchAllUsers());
       dispatch(fetchAllBorrowedBooks());
     }
-  }, [isAuthenticated]);
+  }, [dispatch, isAuthenticated, user?.role]);
 
   return (
     <Router>

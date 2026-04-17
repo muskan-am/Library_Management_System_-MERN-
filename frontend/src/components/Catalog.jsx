@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PiKeyReturnBold } from "react-icons/pi";
 import { FaSquareCheck } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const Catalog = () => {
   const dispatch = useDispatch();
 
   const { returnBookPopup } = useSelector((state) => state.popup);
-  const { loading, error, allBorrowedBooks, message } = useSelector(
+  const { error, allBorrowedBooks, message } = useSelector(
     (state) => state.borrow
   );
 
