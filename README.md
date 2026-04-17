@@ -70,7 +70,13 @@ Library-Management-System/
 ├── frontend/
 └── README.md
 
+---
 
+ ### 🚧 Future Improvements
+- 📱 SMS / WhatsApp notifications
+- 📷 QR / Barcode scanning for books
+- 💳 Online payment integration
+- 🔍 Advanced search & filters
 ---
 
 ## ⚙️ Setup
@@ -88,13 +94,6 @@ cd library-management-system
 - cd frontend
 - npm install
 - npm start
-
----
-### 🚧 Future Improvements
-- 📱 SMS / WhatsApp notifications
-- 📷 QR / Barcode scanning for books
-- 💳 Online payment integration
-- 🔍 Advanced search & filters
 
 ---
 ### 👩‍💻 Author
