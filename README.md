@@ -1,59 +1,98 @@
-# 📚 Library Management System
+# 📚 Library Management System (MERN)
 
-A full-stack Library Management System built using the MERN stack. This application allows users to manage books, borrow and return them, and provides admin functionalities.
-
----
-
-## 🚀 Features
-
-- 🔐 User Authentication (Login/Register)
-- 📖 Book Management (Add, Update, Delete Books)
-- 📚 Borrow & Return System
-- 👩‍💼 Admin Dashboard
-- 📧 Email Notifications
-- ⏳ Fine Calculation for late returns
+A full-stack **Library Management System** built using the MERN stack (MongoDB, Express.js, React.js, Node.js).  
+This system helps manage books, users, and transactions efficiently with features like authentication, email reminders, and fine calculation.
 
 ---
 
-## 🛠 Tech Stack
+## 🌐 Live Demo
 
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB
-- **Authentication:** JWT
-- **Other Tools:** Nodemailer, Cloudinary, Cron Jobs
+🚀 **Frontend (User Interface):**  
+👉 https://digitallibrary11.netlify.app  
 
----
-
-## 📂 Project Structure
-Library Management System/
-│
-├── backend/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── middlewares/
-│ └── utils/
-│
-├── frontend/ (Coming Soon)
-└── README.md
+⚙️ **Backend API:**  
+👉 https://library-management-system-mern-9s8j.onrender.com  
 
 ---
 
-## 🌟 Future Improvements
+## ✨ Key Features
 
-- Frontend integration (React)
-- Search & filter books
-- Pagination
-- UI enhancements
+### 👤 User Features
+- 🔐 Secure Authentication (Login / Register using JWT)
+- 📚 View available books
+- 📖 Borrow and return books
+- ⏰ Track issued books and due dates
+
+### 👩‍💼 Admin Features
+- ➕ Add new books
+- ✏️ Update book details
+- ❌ Delete books
+- 📊 Manage all library records
+
+### ⚡ Smart System Features
+- 📧 **Email Reminder System**  
+  → Users receive an email reminder **1 day before due date** to return books
+
+- ⏳ **Automatic Fine Calculation**  
+  → Late returns automatically calculate fines
+
+- 🔄 Borrow & Return Management  
+  → Tracks book availability in real-time
+
+- ☁️ Cloud Image Upload  
+  → Managed using Cloudinary
 
 ---
 
-## 👩‍💻 Author
+## 🛠️ Tech Stack
 
-- Muskan Kesharwani
+### 🔹 Backend
+- Node.js
+- Express.js
+
+### 🔹 Database
+- MongoDB (Mongoose)
+
+### 🔹 Authentication
+- JWT (JSON Web Token)
+
+### 🔹 Tools
+- Nodemailer (Emails)
+- Cloudinary (Image Storage)
+- Node Cron (Scheduled Jobs)
+
+### 🔹 Deployment
+- Netlify (Frontend)
+- Render (Backend)
 
 ---
+## 🚧 Future Improvements
 
-## 📌 Note
+- 📩 **Multi-Channel Notifications**
+  - Daily alerts via SMS, WhatsApp, and Email
+  - Reminders for due dates and overdue books
 
-Frontend is under development. Backend is fully functional and tested using Postman.
+- 📱 **Barcode / QR Code Integration**
+  - Generate QR/Barcode for each book
+  - Quick issue/return using scanner
+  - Useful for college libraries
+
+- 💳 **Online Payment Integration**
+  - Support for fine payment via UPI / Card
+  - Automatic fine deduction system
+
+- ⏰ **Smart Due Date Tracking**
+  - Show due date at the time of book issue
+  - Automatic fine calculation after due date
+  - Full charge applied after one month delay
+
+- 📊 **Advanced Notifications System**
+  - Reminder before due date
+  - Alerts after overdue
+  - Daily status updates to users
+ 
+  ---
+
+  ## 👩‍💻 Author
+
+ -   Muskan Kesharwani
