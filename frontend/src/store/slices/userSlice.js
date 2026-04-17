@@ -3,6 +3,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { toggleAddNewAdminPopup } from "./popUpSlice";
 
+const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/v1";
+
 
 const userSlice = createSlice({
     name: "user",
@@ -36,7 +39,7 @@ const userSlice = createSlice({
 export const fetchAllUsers = () => async (dispatch) => {
     dispatch(userSlice.actions.fetchAllUsersRequest());
     await axios
-        .get("https://library-management-system-mern-9s8j.onrender.com/api/v1/user/all", { withCredentials: true })
+        .get(`${API_BASE_URL}/user/all`, { withCredentials: true })
         .then((res) => {
             dispatch(userSlice.actions.fetchAllUsersSuccess(res.data.users));
         })
@@ -51,7 +54,7 @@ export const addNewAdmin = (data) => async (dispatch) => {
     dispatch(userSlice.actions.addNewAdminRequest());
 
     await axios
-        .post("https://library-management-system-mern-9s8j.onrender.com/api/v1/user/add/new-admin", data, {
+        .post(`${API_BASE_URL}/user/add/new-admin`, data, {
             withCredentials: true,
             headers: {
                 "Content-Type": "multipart/form-data",

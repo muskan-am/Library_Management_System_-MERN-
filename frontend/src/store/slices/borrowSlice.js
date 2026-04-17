@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toggleRecordBookPopup } from "./popUpSlice";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/v1";
+
 const borrowSlice = createSlice({
   name: "borrow",
   initialState: {
@@ -88,7 +91,7 @@ export const fetchUserBorrowedBooks = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      "https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/my-borrowed-books",
+      `${API_BASE_URL}/borrow/my-borrowed-books`,
       { withCredentials: true }
     );
 
@@ -113,7 +116,7 @@ export const fetchAllBorrowedBooks = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      "https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/borrowed-books-by-users",
+      `${API_BASE_URL}/borrow/borrowed-books-by-users`,
       { withCredentials: true }
     );
 
@@ -138,7 +141,7 @@ export const recordBorrowBook = (email, id) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      `https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/record-borrow-book/${id}`,
+      `${API_BASE_URL}/borrow/record-borrow-book/${id}`,
       { email },
       {
         withCredentials: true,
@@ -172,7 +175,7 @@ export const returnBook = ({ email, bookId }) => async (dispatch) => {
 
   try {
     const { data } = await axios.put(
-      `https://library-management-system-mern-9s8j.onrender.com/api/v1/borrow/return-borrowed-book/${bookId}`,
+      `${API_BASE_URL}/borrow/return-borrowed-book/${bookId}`,
       { email },
       {
         withCredentials: true,

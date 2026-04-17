@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toggleAddBookPopup } from "./popUpSlice";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/v1";
+
 const initialState = {
   loading: false,
   error: null,
@@ -94,7 +97,7 @@ export const fetchAllBooks = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get(
-      "https://library-management-system-mern-9s8j.onrender.com/api/v1/book/all",
+      `${API_BASE_URL}/book/all`,
       {
         withCredentials: true,
       }
@@ -116,7 +119,7 @@ export const addBook = (formData) => async (dispatch) => {
 
   try {
     const { data } = await axios.post(
-      "https://library-management-system-mern-9s8j.onrender.com/api/v1/book/admin/add",
+      `${API_BASE_URL}/book/admin/add`,
       formData,
       {
         withCredentials: true,
@@ -143,7 +146,7 @@ export const deleteBookById = (bookId) => async (dispatch) => {
 
   try {
     const { data } = await axios.delete(
-      `https://library-management-system-mern-9s8j.onrender.com/api/v1/book/delete/${bookId}`,
+      `${API_BASE_URL}/book/delete/${bookId}`,
       {
         withCredentials: true,
       }

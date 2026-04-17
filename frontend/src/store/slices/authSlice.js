@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API_BASE_URL =
+    import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api/v1";
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -21,6 +24,32 @@ const authSlice = createSlice({
             state.message = action.payload.message;
         },
         registerFailed(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        bootstrapStatusRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+        bootstrapStatusSuccess(state) {
+            state.loading = false;
+        },
+        bootstrapStatusFailed(state, action) {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        bootstrapFirstAdminRequest(state) {
+            state.loading = true;
+            state.error = null;
+            state.message = null;
+        },
+        bootstrapFirstAdminSuccess(state, action) {
+            state.loading = false;
+            state.message = action.payload.message;
+            state.user = action.payload.user;
+            state.isAuthenticated = true;
+        },
+        bootstrapFirstAdminFailed(state, action) {
             state.loading = false;
             state.error = action.payload;
         },
@@ -144,7 +173,7 @@ export const resetAuthSlice = () => (dispatch) => {
 export const register = (data) => async(dispatch) => {
     dispatch(authSlice.actions.registerRequest());
     await axios
-    .post("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/register", data, {
+    .post(`${API_BASE_URL}/auth/register`, data, {
         withCredentials: true,
         headers: {
             "Content-Type": "application/json",
@@ -156,10 +185,52 @@ export const register = (data) => async(dispatch) => {
     });
 };
 
+export const getBootstrapStatus = () => async (dispatch) => {
+    dispatch(authSlice.actions.bootstrapStatusRequest());
+    try {
+        const res = await axios.get(
+            `${API_BASE_URL}/auth/bootstrap/status`,
+            {
+                withCredentials: true,
+            }
+        );
+        dispatch(authSlice.actions.bootstrapStatusSuccess());
+        return res.data;
+    } catch {
+        dispatch(authSlice.actions.bootstrapStatusSuccess());
+        return null;
+    }
+};
+
+export const bootstrapFirstAdmin = (data) => async (dispatch) => {
+    dispatch(authSlice.actions.bootstrapFirstAdminRequest());
+    await axios
+        .post(
+            `${API_BASE_URL}/auth/bootstrap/first-admin`,
+            data,
+            {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        )
+        .then((res) => {
+            dispatch(authSlice.actions.bootstrapFirstAdminSuccess(res.data));
+        })
+        .catch((error) => {
+            dispatch(
+                authSlice.actions.bootstrapFirstAdminFailed(
+                    error.response?.data?.message || "Unable to create first admin"
+                )
+            );
+        });
+};
+
 export const otpVerification = (email, otp) => async(dispatch) => {
     dispatch(authSlice.actions.otpVerificationRequest());
     await axios
-    .post("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/verify-otp", {email, otp}, {
+    .post(`${API_BASE_URL}/auth/verify-otp`, {email, otp}, {
         withCredentials: true,
         headers: {
             "Content-Type": "application/json",
@@ -174,7 +245,7 @@ export const otpVerification = (email, otp) => async(dispatch) => {
 export const login = (data) => async(dispatch) => {
     dispatch(authSlice.actions.loginRequest());
     await axios
-    .post("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/login", 
+    .post(`${API_BASE_URL}/auth/login`, 
         data, 
         {
         withCredentials: true,
@@ -191,7 +262,7 @@ export const login = (data) => async(dispatch) => {
 export const logout = () => async(dispatch) => {
     dispatch(authSlice.actions.logoutRequest());
     await axios
-    .get("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/logout", {
+    .get(`${API_BASE_URL}/auth/logout`, {
         withCredentials: true,
     })
     .then((res) => {
@@ -206,7 +277,7 @@ export const logout = () => async(dispatch) => {
 export const getUser = () => async(dispatch) => {
     dispatch(authSlice.actions.getUserRequest());
     await axios
-    .get("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/me", {
+    .get(`${API_BASE_URL}/auth/me`, {
         withCredentials: true,
     })
     .then((res) => {
@@ -220,7 +291,7 @@ export const getUser = () => async(dispatch) => {
 export const forgotPassword = (email) => async(dispatch) => {
     dispatch(authSlice.actions.forgotPasswordRequest());
     await axios
-    .post("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/password/forgot", 
+    .post(`${API_BASE_URL}/auth/password/forgot`, 
         {email}, 
         {
         withCredentials: true,
@@ -238,7 +309,7 @@ export const resetPassword = (data, token) => async(dispatch) => {
     dispatch(authSlice.actions.resetPasswordRequest());
     await axios
     .put(
-        `https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/password/reset/${token}`, 
+        `${API_BASE_URL}/auth/password/reset/${token}`, 
         data , 
         {
         withCredentials: true,
@@ -255,7 +326,7 @@ export const resetPassword = (data, token) => async(dispatch) => {
 export const updatePassword = (data) => async(dispatch) => {
     dispatch(authSlice.actions.resetPasswordRequest());
     await axios
-    .put("https://library-management-system-mern-9s8j.onrender.com/api/v1/auth/password/update", 
+    .put(`${API_BASE_URL}/auth/password/update`, 
         data , 
         {
         withCredentials: true,

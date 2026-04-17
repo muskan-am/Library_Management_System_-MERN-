@@ -8,6 +8,11 @@ import { sendToken } from "../utils/sendToken.js";
 import { sendEmail } from "../utils/sendEmail.js";
 import { generateForgotPasswordEmailTemplate } from "../utils/emailTemplates.js";
 
+const createDefaultAvatarUrl = (name = "Admin") => {
+    const encodedName = encodeURIComponent(name.trim() || "Admin");
+    return `https://ui-avatars.com/api/?name=${encodedName}&background=111827&color=ffffff&size=256`;
+};
+
 
 // ✅ REGISTER
 export const register = catchAsyncErrors(async (req, res, next) => {
@@ -54,6 +59,17 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+});
+
+
+// ✅ CHECK FIRST ADMIN AVAILABILITY
+export const getFirstAdminStatus = catchAsyncErrors(async (req, res) => {
+    const adminExists = await User.exists({ role: "Admin", accountVerified: true });
+
+    res.status(200).json({
+        success: true,
+        firstAdminAllowed: !adminExists,
+    });
 });
 
 
@@ -239,7 +255,7 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
         message: "Password updated successfully.",
     });
 });
-
+``
 
 // ✅ RESET PASSWORD
 export const resetPassword = catchAsyncErrors(async (req, res, next) => {
@@ -269,4 +285,55 @@ export const resetPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save();
 
     sendToken(user, 200, "Password reset successfully.", res);
+});
+
+
+// ✅ BOOTSTRAP FIRST ADMIN (one-time)
+export const bootstrapFirstAdmin = catchAsyncErrors(async (req, res, next) => {
+    const { name, email, password, setupKey } = req.body;
+
+    if (!name || !email || !password || !setupKey) {
+        return next(new ErrorHandler("Please provide name, email, password and setup key.", 400));
+    }
+
+    if (!process.env.FIRST_ADMIN_SETUP_KEY) {
+        return next(new ErrorHandler("First admin setup is not configured on server.", 500));
+    }
+
+    if (setupKey !== process.env.FIRST_ADMIN_SETUP_KEY) {
+        return next(new ErrorHandler("Invalid setup key.", 401));
+    }
+
+    if (password.length < 8 || password.length > 16) {
+        return next(new ErrorHandler("Password must be between 8 and 16 characters.", 400));
+    }
+
+    const adminExists = await User.exists({ role: "Admin", accountVerified: true });
+    if (adminExists) {
+        return next(new ErrorHandler("Admin already exists. Use the Add New Admin flow.", 403));
+    }
+
+    const verifiedUser = await User.findOne({ email, accountVerified: true });
+    if (verifiedUser) {
+        return next(new ErrorHandler("Email is already in use.", 400));
+    }
+
+    // Remove stale unverified entries with the same email before creating first admin.
+    await User.deleteMany({ email, accountVerified: false });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+        name,
+        email,
+        password: hashedPassword,
+        role: "Admin",
+        accountVerified: true,
+        avatar: {
+            public_id: "default-first-admin-avatar",
+            url: createDefaultAvatarUrl(name),
+        },
+    });
+
+    sendToken(user, 201, "First admin created successfully.", res);
 });
